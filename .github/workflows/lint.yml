@@ -4,9 +4,8 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
+    
 jobs:
-# A style guide linter widely used
   python-flake8:
     name: flake8
     runs-on: ubuntu-latest
@@ -22,7 +21,18 @@ jobs:
           linters: flake8
           run: flake8
 
-# A python formatter to help you write homogeneous code
   python-black:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: black
+        uses: psf/black@stable
+
+  gitleaks:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: gitleaks-action
+      uses: zricethezav/gitleaks-action@master
+
